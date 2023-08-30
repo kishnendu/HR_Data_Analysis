@@ -83,6 +83,10 @@ ORDER BY jobtitle DESC;
 
 -- 8. Which department has the highest turnover rate?
 
+--Note:-"Turnover rate" typically refers to the rate at which employees leave a company or department and need to be replaced.
+--It can be calculated as the number of employees who leave over a given time period divided by the average number of employees in the company or 
+--department over that same time period.
+
 SELECT department, COUNT(*) as total_count, 
     SUM(CASE WHEN termdate <= CURDATE() AND termdate <> '0000-00-00' THEN 1 ELSE 0 END) as terminated_count, 
     SUM(CASE WHEN termdate = '0000-00-00' THEN 1 ELSE 0 END) as active_count,
@@ -102,6 +106,9 @@ ORDER BY count DESC;
 
 -- 10. How has the company's employee count changed over time based on hire and term dates?
 
+-- Note:This query groups the employees by the year of their hire date and calculates the total number of hires, terminations, and net 
+--change (the difference between hires and terminations) for each year.
+--The results are sorted by year in ascending order.
 SELECT 
     YEAR(hire_date) AS year, 
     COUNT(*) AS hires, 
@@ -115,6 +122,9 @@ GROUP BY
     YEAR(hire_date)
 ORDER BY 
     YEAR(hire_date) ASC;
+
+--In this modified query, a subquery is used to first calculate the terminations alias, which is then used in the calculation for the net_change 
+--and net_change_percent column in the outer query.
     
 SELECT 
     year, 
